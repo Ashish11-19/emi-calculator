@@ -204,7 +204,7 @@ export default function EMICalculator() {
                   <BarChart
                     data={data}
                     onMouseMove={(e) =>
-                      setActiveIndex(e?.activeTooltipIndex ?? -1)
+                      setActiveIndex(Number(e?.activeTooltipIndex ?? -1))
                     }
                     onMouseLeave={() => setActiveIndex(-1)}
                   >
