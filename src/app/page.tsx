@@ -12,18 +12,18 @@ import {
 } from "recharts";
 
 export default function EMICalculator() {
-  // State variables for user inputs
-  const [loanAmount, setLoanAmount] = useState(500000);
-  const [tenure, setTenure] = useState(5); // years
-  const [interestRate, setInterestRate] = useState(8.5);
-  const [activeIndex, setActiveIndex] = useState(-1);
+  // ---------- STATE VARIABLES ----------
+  const [loanAmount, setLoanAmount] = useState<number>(500000); // Loan amount in ₹
+  const [tenure, setTenure] = useState<number>(5); // Loan tenure in years
+  const [interestRate, setInterestRate] = useState<number>(8.5); // Annual interest rate in %
+  const [activeIndex, setActiveIndex] = useState<number>(-1); // Active bar index in chart
 
-  // Function to calculate EMI, total payment, and interest
+  // ---------- CALCULATE EMI ----------
   const calculateEMI = () => {
-    const principal = parseFloat(loanAmount);
-    const annualRate = parseFloat(interestRate);
+    const principal = loanAmount;
+    const annualRate = interestRate;
     const monthlyRate = annualRate / 12 / 100;
-    const months = parseFloat(tenure) * 12;
+    const months = tenure * 12;
 
     const emi =
       (principal * monthlyRate * Math.pow(1 + monthlyRate, months)) /
@@ -42,14 +42,14 @@ export default function EMICalculator() {
 
   const result = calculateEMI();
 
-  // Data for bar chart
+  // ---------- BAR CHART DATA ----------
   const data = [
     { name: "Principal", value: +result.principal },
     { name: "Interest", value: +result.interest },
     { name: "Total", value: +result.total },
   ];
 
-  // Colors for bar chart bars
+  // Chart bar colors
   const colors = ["#3f3f46", "#6366f1", "#eab308"];
 
   return (
@@ -72,7 +72,7 @@ export default function EMICalculator() {
           <h1 className="text-xl font-bold text-[#4B3F72]">GharPadharo</h1>
         </a>
 
-        {/* Navbar links */}
+        {/* Navbar Links */}
         <ul className="flex space-x-4 text-sm font-medium text-gray-600">
           <li>
             <a
@@ -101,7 +101,7 @@ export default function EMICalculator() {
       {/* ---------- PAGE CONTENT ---------- */}
       <div className="pt-20 p-4 relative overflow-hidden">
 
-        {/* Decorative wave background (now visible on phones too) */}
+        {/* Wave Background (Visible on all devices) */}
         <div className="absolute bottom-0 left-0 w-full z-0">
           <img
             src="/Screenshot 2025-08-08 182655.png"
@@ -110,19 +110,21 @@ export default function EMICalculator() {
           />
         </div>
 
-        {/* Main content container */}
+        {/* Main Container */}
         <div className="relative z-10 max-w-7xl mx-auto h-full flex flex-col space-y-4">
-          {/* Title */}
+
+          {/* Page Title */}
           <h1 className="text-2xl md:text-3xl font-extrabold text-center text-[#4B3F72]">
             EMI Calculator
           </h1>
 
-          {/* Layout: Input Section (left) + Results/Chart (right) */}
+          {/* ---------- LAYOUT: Input + Results/Chart ---------- */}
           <div className="flex flex-col md:flex-row flex-1 gap-4 overflow-hidden">
 
             {/* ---------- INPUT SECTION ---------- */}
             <div className="w-full md:w-1/4 h-[275px] rounded-xl bg-white shadow-xl p-4 space-y-4">
-              {/* Loan Amount Input */}
+              
+              {/* Loan Amount */}
               <div>
                 <label className="block mb-1 font-medium text-sm text-gray-700">
                   Loan Amount
@@ -131,11 +133,11 @@ export default function EMICalculator() {
                   type="number"
                   className="w-full bg-white text-black border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-600"
                   value={loanAmount}
-                  onChange={(e) => setLoanAmount(e.target.value)}
+                  onChange={(e) => setLoanAmount(Number(e.target.value))}
                 />
               </div>
 
-              {/* Tenure Input */}
+              {/* Tenure */}
               <div>
                 <label className="block mb-1 font-medium text-sm text-gray-700">
                   Tenure (in years)
@@ -144,11 +146,11 @@ export default function EMICalculator() {
                   type="number"
                   className="w-full bg-white text-black border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-600"
                   value={tenure}
-                  onChange={(e) => setTenure(e.target.value)}
+                  onChange={(e) => setTenure(Number(e.target.value))}
                 />
               </div>
 
-              {/* Interest Rate Input */}
+              {/* Interest Rate */}
               <div>
                 <label className="block mb-1 font-medium text-sm text-gray-700">
                   Interest Rate (p.a.)
@@ -158,13 +160,14 @@ export default function EMICalculator() {
                   step="0.1"
                   className="w-full bg-white text-black border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-600"
                   value={interestRate}
-                  onChange={(e) => setInterestRate(e.target.value)}
+                  onChange={(e) => setInterestRate(Number(e.target.value))}
                 />
               </div>
             </div>
 
             {/* ---------- RESULTS & CHART ---------- */}
             <div className="flex-1 grid grid-rows-[auto_1fr] gap-3">
+
               {/* Results Section */}
               <div className="bg-white p-3 rounded-xl shadow-xl">
                 <h2 className="text-lg font-semibold text-[#4B3F72] border-b pb-1">
@@ -192,7 +195,7 @@ export default function EMICalculator() {
                 </div>
               </div>
 
-              {/* Bar Chart Section */}
+              {/* Bar Chart */}
               <div className="bg-white p-4 rounded-xl shadow-xl">
                 <h2 className="text-lg font-semibold text-[#4B3F72] mb-1 border-b pb-1">
                   Breakdown
@@ -227,6 +230,7 @@ export default function EMICalculator() {
                   </BarChart>
                 </ResponsiveContainer>
               </div>
+
             </div>
           </div>
         </div>
