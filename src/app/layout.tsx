@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "emi-calculator.GharPadharo.com",
+  title: "Emi Calculator",
   description: "EMI Calculator by Ghar Padharo",
  
 };
